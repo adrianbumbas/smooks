@@ -86,9 +86,12 @@ public class SmooksProcessor implements Processor, Service, CamelContextAware
     public void process(final Exchange exchange) throws Exception
     {
     	//forward headers
-    	exchange.getOut().setHeaders(exchange.getIn().getHeaders());  
+    	exchange.getOut().getHeaders().clear();
+    	exchange.getOut().getHeaders().putAll(exchange.getIn().getHeaders());  
+    	
     	//forward attachments
-    	exchange.getOut().setAttachments(exchange.getIn().getAttachments());  
+    	exchange.getOut().getAttachments().clear();
+    	exchange.getOut().getAttachments().putAll(exchange.getIn().getAttachments());  
         
     	final ExecutionContext executionContext = smooks.createExecutionContext();
         executionContext.setAttribute(Exchange.class, exchange);
